@@ -1,0 +1,31 @@
+{
+  "name": "world-empire-game-server",
+  "version": "0.1.0",
+  "description": "Authoritative PostgreSQL multiplayer game server starter for a Steam/PC player-run economy game.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "node src/migrate.js",
+    "seed": "node src/seed.js",
+    "setup": "npm install && npm run migrate && npm run seed",
+    "start:prod": "node src/migrate.js && node src/seed.js && node src/server.js",
+    "check": "node --check src/server.js && node --check src/app.js && find src/routes src/websocket src/middleware src/services -name \"*.js\" -print0 | xargs -0 -n1 node --check && node --check src/auth.js && node --check src/db.js && node --check src/economy.js && node --check src/migrate.js && node --check src/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
+    "uuid": "^11.0.3",
+    "ws": "^8.18.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

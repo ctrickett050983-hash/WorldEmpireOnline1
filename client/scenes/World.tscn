@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_world"]
+
+[node name="World" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_world")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.0705882, 0.105882, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 900.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 30
+text = "World Loaded"
+
+[node name="Info" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 82.0
+offset_right = 900.0
+offset_bottom = 180.0
+text = "Connected to server."
+autowrap_mode = 2
+
+[node name="CitiesList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 200.0
+offset_right = 620.0
+offset_bottom = 660.0
+
+[node name="RefreshButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 200.0
+offset_right = 860.0
+offset_bottom = 245.0
+text = "Refresh World"
+
+[node name="LogoutButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 260.0
+offset_right = 860.0
+offset_bottom = 305.0
+text = "Logout"
