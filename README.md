@@ -1,46 +1,54 @@
-# World Empire Online - Godot 4 Client Starter
+# World Empire Online - Sprint 3 Client
 
-This starter client connects to your existing Node/PostgreSQL game server.
+This is a Godot 4 client update for Sprint 3.
 
-## What is included
+## What it adds
 
-- Godot 4 project
-- Login screen
-- Register button
-- JWT token storage for the running session
-- `/api/world` loading
-- World scene listing cities
-- Refresh and logout buttons
+- Better login/register screen
+- Server URL input
+- Session/API/Realtime autoloads
+- World city selection
+- 3D district scene
+- WASD movement
+- Shift sprint
+- Space jump
+- Mouse camera
+- E property interaction
+- Buy property flow through your Node/PostgreSQL server
+- P phone UI shell
+- T chat panel with WebSocket support
+- Procedural city district using your server property data
+- Building labels and prices
 
-## How to use
+## Install
 
-1. Keep your Node server running on:
+1. Back up your current `client` folder.
+2. Copy this `client` folder into your repository.
+3. Start your Node.js server.
+4. Open `client/project.godot` in Godot 4.
+5. Press Play.
+6. Log in with your existing account.
 
-   http://localhost:3000
+## Controls
 
-2. Open Godot 4.
-3. Import/open the project inside:
+- WASD: move
+- Mouse: camera
+- Shift: sprint
+- Space: jump
+- E: inspect/buy nearby property
+- P: phone
+- T: chat
+- Esc: release mouse
 
-   `client/`
+## Server endpoints used
 
-4. Press Play.
-5. Login with the account that worked:
+- POST `/api/auth/login`
+- POST `/api/auth/register`
+- GET `/api/world`
+- GET `/api/cities/:id`
+- POST `/api/properties/:id/buy`
+- WebSocket `ws://localhost:3000/?token=...`
 
-   `player1@example.com`
-   `Password123!`
+## Notes
 
-6. You should land on the World screen and see your cities.
-
-## Important
-
-The Godot client talks to your server only. It does not connect directly to PostgreSQL.
-
-Next features to add:
-
-- character creation
-- player movement scene
-- WebSocket chat
-- city ownership actions
-- property buying
-- business management
-- bank UI
+This is still a Sprint 3 foundation, not final Steam-quality gameplay. It gives you the full flow: login, choose city, spawn, walk, inspect properties, buy through the server, and receive live updates.
