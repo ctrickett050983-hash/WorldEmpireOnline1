@@ -22,7 +22,7 @@ func _populate() -> void:
 	var cities: Array = Session.last_world_data.get("cities", [])
 	for c in cities:
 		var b := Button.new()
-		var owner := String(c.get("owner_name", "Unowned"))
+		var owner := str(c.get("owner_name", "Unowned"))
 		if owner.is_empty(): owner = "Unowned"
 		b.text = "%s, %s  | Pop %s | Happiness %s | Owner %s" % [c.get("name","City"), c.get("country",""), str(c.get("population",0)), str(c.get("happiness",0)), owner]
 		b.pressed.connect(_select_city.bind(c))
@@ -30,8 +30,8 @@ func _populate() -> void:
 
 func _select_city(city: Dictionary) -> void:
 	Session.selected_city = city
-	status.text = "Loading " + String(city.get("name", "city")) + "..."
-	API.get("/api/cities/%s" % String(city.get("id", "")), "city_detail")
+	status.text = "Loading " + str(city.get("name", "city")) + "..."
+	API.get_json("/api/cities/%s" % str(city.get("id", "")), "city_detail")
 
 func _on_api_done(ok: bool, data: Variant, status_code: int, context: String) -> void:
 	if context != "city_detail": return

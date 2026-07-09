@@ -80,10 +80,10 @@ func _build_city() -> void:
 		var z := -25.0 + float(idx / 5) * 18.0
 		var height := 5.0 + float(idx % 3) * 2.0
 		var color := Color(0.35 + float(idx%4)*0.08, 0.35, 0.45 + float(idx%3)*0.1)
-		var building := _create_box(String(p.get("name","Property")), Vector3(8,height,8), Vector3(x,height/2.0,z), color)
+		var building := _create_box(str(p.get("name","Property")), Vector3(8,height,8), Vector3(x,height/2.0,z), color)
 		building.set_meta("property", p)
-		property_nodes[String(p.get("id",""))] = building
-		_create_sign(String(p.get("name","Property")), Vector3(x,height+1.2,z-4.3), p)
+		property_nodes[str(p.get("id",""))] = building
+		_create_sign(str(p.get("name","Property")), Vector3(x,height+1.2,z-4.3), p)
 		idx += 1
 	if props.is_empty():
 		for i in range(10):
@@ -146,13 +146,13 @@ func _show_property_panel(p: Dictionary) -> void:
 	property_panel.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	var box := VBoxContainer.new(); box.add_theme_constant_override("separation",8); property_panel.add_child(box)
-	var title := Label.new(); title.text = String(p.get("name", "Property")); title.add_theme_font_size_override("font_size",24); box.add_child(title)
-	var owner := String(p.get("owner_user_id", ""))
+	var title := Label.new(); title.text = str(p.get("name", "Property")); title.add_theme_font_size_override("font_size",24); box.add_child(title)
+	var owner := str(p.get("owner_user_id", ""))
 	if owner.is_empty():
 		owner = "Unowned"
 	var value := float(p.get("value",0))
 	var details := Label.new(); details.text = "Kind: %s\nOwner: %s\nValue: £%.2f\nFor sale: %s" % [p.get("kind","property"), owner, value, str(p.get("is_for_sale",true))]; box.add_child(details)
-	var buy := Button.new(); buy.text="Buy Property"; buy.disabled = not bool(p.get("is_for_sale", true)); buy.pressed.connect(_buy_property.bind(String(p.get("id","")))); box.add_child(buy)
+	var buy := Button.new(); buy.text="Buy Property"; buy.disabled = not bool(p.get("is_for_sale", true)); buy.pressed.connect(_buy_property.bind(str(p.get("id","")))); box.add_child(buy)
 	var close := Button.new(); close.text="Close"; close.pressed.connect(func(): property_panel.visible=false; Input.mouse_mode=Input.MOUSE_MODE_CAPTURED); box.add_child(close)
 
 func _buy_property(id: String) -> void:
@@ -163,7 +163,7 @@ func _on_api_done(ok: bool, data: Variant, status_code: int, context: String) ->
 	if context == "buy_property":
 		if ok:
 			prompt_label.text = "Property bought. Refreshing city..."
-			API.get("/api/cities/%s" % String(Session.selected_city.get("id","")), "refresh_city")
+			API.get_json("/api/cities/%s" % str(Session.selected_city.get("id","")), "refresh_city")
 		else:
 			prompt_label.text = "Purchase failed: " + str(data)
 	elif context == "refresh_city" and ok:
@@ -183,18 +183,18 @@ func _update_nearest_property() -> void:
 	if nearest_property.is_empty():
 		prompt_label.text = "P: Phone | T: Chat | WASD: Move | Shift: Sprint"
 	else:
-		prompt_label.text = "Press E: " + String(nearest_property.get("name", "Property"))
+		prompt_label.text = "Press E: " + str(nearest_property.get("name", "Property"))
 
 func _refresh_hud() -> void:
 	info_label.text = "%s | %s | Cash £%s" % [Session.player_name, Session.selected_city.get("name","City"), str(Session.player_cash)]
 
 func _send_chat(text: String) -> void:
 	if text.strip_edges().is_empty(): return
-	Realtime.send_chat(String(Session.selected_city.get("id","")), text.strip_edges())
+	Realtime.send_chat(str(Session.selected_city.get("id","")), text.strip_edges())
 	chat_input.text = ""
 
 func _on_realtime_message(data: Dictionary) -> void:
 	if data.get("type", "") == "chat":
 		chat_log.append_text("%s: %s\n" % [data.get("name", "Player"), data.get("message", "")])
 	elif data.get("type", "") in ["property_bought", "city_settings_changed", "city_claimed"]:
-		prompt_label.text = "World update received: " + String(data.get("type", "update"))
+		prompt_label.text = "World update received: " + str(data.get("type", "update"))

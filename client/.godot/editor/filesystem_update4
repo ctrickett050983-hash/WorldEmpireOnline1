@@ -1,4 +1,6 @@
-res://scripts/api_client.gd
+res://scripts/api.gd
+res://scripts/city_select.gd
+res://scripts/district.gd
 res://scripts/login.gd
+res://scripts/realtime.gd
 res://scripts/session.gd
-res://scripts/world.gd

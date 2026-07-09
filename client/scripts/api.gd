@@ -11,7 +11,7 @@ func post(path: String, payload: Dictionary, context: String = "") -> void:
 		request_finished.emit(false, {"error":"request_failed", "code":err}, 0, context)
 		http.queue_free()
 
-func get(path: String, context: String = "") -> void:
+func get_json(path: String, context: String = "") -> void:
 	var http := HTTPRequest.new()
 	add_child(http)
 	http.request_completed.connect(_on_request_completed.bind(http, context))

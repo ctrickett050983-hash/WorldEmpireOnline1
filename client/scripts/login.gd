@@ -89,12 +89,12 @@ func _on_api_done(ok: bool, data: Variant, status_code: int, context: String) ->
 	if not ok:
 		status.text = "Auth failed: " + str(data)
 		return
-	Session.token = String(data.get("token", ""))
+	Session.token = str(data.get("token", ""))
 	Session.user = data.get("user", {})
 	Session.player_cash = float(Session.user.get("cash", 0))
-	Session.player_name = String(Session.user.get("display_name", "Player"))
+	Session.player_name = str(Session.user.get("display_name", "Player"))
 	status.text = "Connected. Loading world..."
-	API.get("/api/world", "world")
+	API.get_json("/api/world", "world")
 	API.request_finished.disconnect(_on_api_done)
 	API.request_finished.connect(_on_world_done)
 
