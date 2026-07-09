@@ -7,6 +7,7 @@ var token: String = ""
 var user: Dictionary = {}
 var last_world_data: Dictionary = {}
 var selected_city: Dictionary = {}
+var current_character: Dictionary = {}
 var city_detail: Dictionary = {}
 var player_cash: float = 0.0
 var player_name: String = "Player"
@@ -25,6 +26,7 @@ func clear() -> void:
 	user = {}
 	last_world_data = {}
 	selected_city = {}
+	current_character = {}
 	city_detail = {}
 	player_cash = 0.0
 	player_name = "Player"

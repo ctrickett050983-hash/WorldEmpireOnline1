@@ -1,98 +1,24 @@
 ; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
-;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
-
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
-
-config/name="World Empire Online - Stage 1"
+config/name="World Empire Online - Stage 2"
 run/main_scene="res://scenes/Launch.tscn"
-config/features=PackedStringArray("4.7")
+config/features=PackedStringArray("4.2")
 
 [autoload]
-
 Session="*res://scripts/session.gd"
 API="*res://scripts/api.gd"
 Realtime="*res://scripts/realtime.gd"
 
 [input]
-
-ui_cancel={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 4194305,
-"type": "InputEventKey"
-}]
-}
-move_forward={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 87,
-"type": "InputEventKey"
-}]
-}
-move_back={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 83,
-"type": "InputEventKey"
-}]
-}
-move_left={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 65,
-"type": "InputEventKey"
-}]
-}
-move_right={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 68,
-"type": "InputEventKey"
-}]
-}
-sprint={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 4194325,
-"type": "InputEventKey"
-}]
-}
-jump={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 32,
-"type": "InputEventKey"
-}]
-}
-interact={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 69,
-"type": "InputEventKey"
-}]
-}
-phone={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 80,
-"type": "InputEventKey"
-}]
-}
-chat={
-"deadzone": 0.5,
-"events": [{
-"physical_keycode": 84,
-"type": "InputEventKey"
-}]
-}
+move_forward={"deadzone":0.5,"events":[{"physical_keycode":87,"type":"InputEventKey"}]}
+move_back={"deadzone":0.5,"events":[{"physical_keycode":83,"type":"InputEventKey"}]}
+move_left={"deadzone":0.5,"events":[{"physical_keycode":65,"type":"InputEventKey"}]}
+move_right={"deadzone":0.5,"events":[{"physical_keycode":68,"type":"InputEventKey"}]}
+sprint={"deadzone":0.5,"events":[{"physical_keycode":4194325,"type":"InputEventKey"}]}
+jump={"deadzone":0.5,"events":[{"physical_keycode":32,"type":"InputEventKey"}]}
+interact={"deadzone":0.5,"events":[{"physical_keycode":69,"type":"InputEventKey"}]}
+phone={"deadzone":0.5,"events":[{"physical_keycode":80,"type":"InputEventKey"}]}
+chat={"deadzone":0.5,"events":[{"physical_keycode":84,"type":"InputEventKey"}]}
+ui_cancel={"deadzone":0.5,"events":[{"physical_keycode":4194305,"type":"InputEventKey"}]}

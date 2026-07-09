@@ -104,5 +104,19 @@ func _on_world_done(ok: bool, data: Variant, status_code: int, context: String) 
 		status.text = "World load failed: " + str(data)
 		return
 	Session.last_world_data = data
-	Realtime.connect_to_server()
-	get_tree().change_scene_to_file("res://scenes/CitySelect.tscn")
+	status.text = "Checking character..."
+	API.request_finished.disconnect(_on_world_done)
+	API.request_finished.connect(_on_character_done)
+	API.get_json("/api/characters/me", "character_me")
+
+func _on_character_done(ok: bool, data: Variant, status_code: int, context: String) -> void:
+	if context != "character_me": return
+	if ok and typeof(data) == TYPE_DICTIONARY and data.has("character") and data["character"] != null:
+		Session.current_character = data["character"]
+		Realtime.connect_to_server()
+		get_tree().change_scene_to_file("res://scenes/CitySelect.tscn")
+		return
+	if status_code == 404:
+		get_tree().change_scene_to_file("res://scenes/CharacterCreate.tscn")
+		return
+	status.text = "Character check failed: " + str(data)
