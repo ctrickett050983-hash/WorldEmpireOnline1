@@ -1,54 +1,68 @@
-# World Empire Online - Sprint 3 Client
+# World Empire Online - Stage 2
 
-This is a Godot 4 client update for Sprint 3.
+Stage 2 adds persistent character creation after login.
 
-## What it adds
+## Client changes
 
-- Better login/register screen
-- Server URL input
-- Session/API/Realtime autoloads
-- World city selection
-- 3D district scene
-- WASD movement
-- Shift sprint
-- Space jump
-- Mouse camera
-- E property interaction
-- Buy property flow through your Node/PostgreSQL server
-- P phone UI shell
-- T chat panel with WebSocket support
-- Procedural city district using your server property data
-- Building labels and prices
+Copy the `client/` folder into your repo.
 
-## Install
+New flow:
 
-1. Back up your current `client` folder.
-2. Copy this `client` folder into your repository.
-3. Start your Node.js server.
-4. Open `client/project.godot` in Godot 4.
-5. Press Play.
-6. Log in with your existing account.
+1. Login/register.
+2. Load `/api/world`.
+3. Check `GET /api/characters/me`.
+4. If no character exists, open character creation.
+5. Save to `POST /api/characters/create`.
+6. Continue to city select.
 
-## Controls
+## Server changes required
 
-- WASD: move
-- Mouse: camera
-- Shift: sprint
-- Space: jump
-- E: inspect/buy nearby property
-- P: phone
-- T: chat
-- Esc: release mouse
+Before testing the client, add the Stage 2 server patch.
 
-## Server endpoints used
+### Database
 
-- POST `/api/auth/login`
-- POST `/api/auth/register`
-- GET `/api/world`
-- GET `/api/cities/:id`
-- POST `/api/properties/:id/buy`
-- WebSocket `ws://localhost:3000/?token=...`
+Run:
 
-## Notes
+```sql
+\i server_stage2_patch/migrations/002_characters.sql
+```
 
-This is still a Sprint 3 foundation, not final Steam-quality gameplay. It gives you the full flow: login, choose city, spawn, walk, inspect properties, buy through the server, and receive live updates.
+Or paste the SQL into pgAdmin/query tool.
+
+### Routes
+
+If you are still using the single-file `server.js`, you can replace it with:
+
+`server_stage2_patch/drop_in_single_file_server/server.js`
+
+If you are using the refactored backend, copy the routes from:
+
+`server_stage2_patch/characters_route_snippet.js`
+
+into your character route module or main app and mount it with the same paths.
+
+## Test
+
+1. Start PostgreSQL.
+2. Start your server.
+3. Open Godot.
+4. Log in with an existing player.
+5. If no character exists, the character creator opens.
+6. Create character.
+7. You should continue to city selection.
+
+## PowerShell endpoint test
+
+```powershell
+$response = Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"email":"player1@example.com","password":"Password123!"}'
+
+$token = $response.token
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/characters/me" `
+  -Headers @{ Authorization = "Bearer $token" }
+```
+
+If you have not created a character yet, this should return `character_not_found`.
