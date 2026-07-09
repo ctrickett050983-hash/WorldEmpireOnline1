@@ -5,22 +5,16 @@ var token: String = ""
 var user: Dictionary = {}
 var last_world_data: Dictionary = {}
 var selected_city: Dictionary = {}
-var selected_city_detail: Dictionary = {}
-var character: Dictionary = {}
+var city_detail: Dictionary = {}
+var player_cash: float = 0.0
+var player_name: String = "Player"
 
 func is_logged_in() -> bool:
-	return token != ""
+	return token.length() > 0
 
-func auth_headers() -> PackedStringArray:
-	return PackedStringArray(["Authorization: Bearer " + token])
-
-func json_headers() -> PackedStringArray:
-	return PackedStringArray(["Content-Type: application/json"])
-
-func reset() -> void:
+func clear() -> void:
 	token = ""
 	user = {}
 	last_world_data = {}
 	selected_city = {}
-	selected_city_detail = {}
-	character = {}
+	city_detail = {}

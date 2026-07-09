@@ -1,0 +1,4 @@
+res://scripts/api_client.gd
+res://scripts/login.gd
+res://scripts/session.gd
+res://scripts/world.gd
