@@ -4,3 +4,4 @@ res://scripts/launch.gd
 res://scripts/login.gd
 res://scripts/realtime.gd
 res://scripts/session.gd
+res://scripts/character_create.gd

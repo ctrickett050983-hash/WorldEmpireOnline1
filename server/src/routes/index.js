@@ -4,6 +4,7 @@ const cityRoutes = require('./cities.routes');
 const propertyRoutes = require('./properties.routes');
 const businessRoutes = require('./businesses.routes');
 const adminRoutes = require('./admin.routes');
+const characterRoutes = require('./characters.routes');
 
 function registerRoutes(app) {
   app.use('/api/auth', authRoutes);
@@ -12,6 +13,7 @@ function registerRoutes(app) {
   app.use('/api/properties', propertyRoutes);
   app.use('/api/businesses', businessRoutes);
   app.use('/api/admin', adminRoutes);
+  app.use('/api/characters', characterRoutes);
 }
 
 module.exports = { registerRoutes };
