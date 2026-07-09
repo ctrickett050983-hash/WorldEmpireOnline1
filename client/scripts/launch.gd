@@ -221,7 +221,7 @@ func _on_api_done(ok: bool, data: Variant, status_code: int, context: String) ->
 	Session.apply_login(data)
 	_set_loading_steps(["✓ Server connected", "✓ Account authenticated", "• Loading cities", "• Preparing world"])
 	status_label.text = "Authenticated. Loading world..."
-	API.get("/api/world", "world_load")
+	API.get_json("/api/world", "world_load")
 
 func _handle_world_loaded(ok: bool, data: Variant, status_code: int) -> void:
 	_set_busy(false)

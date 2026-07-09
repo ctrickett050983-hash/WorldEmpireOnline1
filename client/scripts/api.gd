@@ -36,7 +36,7 @@ func authed_post(path: String, payload: Dictionary, context: String = "") -> voi
 		request_finished.emit(false, {"error":"request_failed", "code":err}, 0, context)
 		http.queue_free()
 
-func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, context: String) -> void:
+func _on_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, context: String) -> void:
 	var text := body.get_string_from_utf8()
 	var data: Variant = {}
 	if text.length() > 0:
