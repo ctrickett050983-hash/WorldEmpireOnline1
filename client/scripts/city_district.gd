@@ -30,7 +30,7 @@ func render_city(data: Variant) -> void:
 	for p in properties:
 		var owner := "Available"
 		if str(p.get("owner_user_id", "")) != "": owner = "Owned"
-		var price := p.get("value", "?")
+		var price: String = str(p.get("value", "?"))
 		property_list.add_item("%s | %s | £%s | %s" % [p.get("name", "Property"), p.get("kind", ""), price, owner])
 	spawn_buildings()
 
@@ -56,7 +56,7 @@ func buy_selected_property() -> void:
 	var p = properties[selected[0]]
 	action_status.text = "Buying " + str(p.get("name", "property")) + "..."
 	Api.request_finished.connect(_on_property_bought, CONNECT_ONE_SHOT)
-	Api.post_json("/api/properties/" + str(p.id) + "/buy", {}, Session.token)
+	Api.post_json("/api/properties/" + str(p.get("id", "")) + "/buy", {}, Session.token)
 
 func _on_property_bought(ok: bool, data: Variant, status: int, raw: String) -> void:
 	if not ok:
@@ -70,7 +70,7 @@ func refresh_city() -> void:
 		action_status.text = "Missing city id."
 		return
 	Api.request_finished.connect(_on_city_refreshed, CONNECT_ONE_SHOT)
-	Api.get_json("/api/cities/" + str(city.id), Session.token)
+	Api.get_json("/api/cities/" + str(city.get("id", "")), Session.token)
 
 func _on_city_refreshed(ok: bool, data: Variant, status: int, raw: String) -> void:
 	if not ok:
