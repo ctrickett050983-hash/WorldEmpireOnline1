@@ -3,12 +3,12 @@ extends Control
 @onready var email_input: LineEdit = $Panel/EmailInput
 @onready var password_input: LineEdit = $Panel/PasswordInput
 @onready var status_label: Label = $Panel/StatusLabel
+@onready var api_input: LineEdit = $Panel/ApiInput
 
-const WORLD_SCENE := "res://scenes/World.tscn"
-var api_url := "http://localhost:3000"
-var token := ""
+const WORLD_MAP_SCENE := "res://scenes/WorldMap.tscn"
 
 func _ready() -> void:
+	api_input.text = Session.api_url
 	$Panel/LoginButton.pressed.connect(login)
 	$Panel/RegisterButton.pressed.connect(register)
 
@@ -21,65 +21,31 @@ func register() -> void:
 	send_auth_request("/api/auth/register")
 
 func send_auth_request(path: String) -> void:
+	Session.api_url = api_input.text.strip_edges().trim_suffix("/")
 	if email_input.text.strip_edges() == "" or password_input.text == "":
 		status_label.text = "Enter email and password."
 		return
 
-	var http := HTTPRequest.new()
-	add_child(http)
-	http.request_completed.connect(_on_auth_done.bind(http))
-
-	var body := JSON.stringify({
+	Api.request_finished.connect(_on_auth_done, CONNECT_ONE_SHOT)
+	Api.post_json(path, {
 		"email": email_input.text.strip_edges(),
 		"password": password_input.text,
-		"displayName": email_input.text.strip_edges()
+		"displayName": email_input.text.strip_edges().split("@")[0]
 	})
 
-	var err := http.request(
-		api_url + path,
-		["Content-Type: application/json"],
-		HTTPClient.METHOD_POST,
-		body
-	)
-	if err != OK:
-		status_label.text = "Request failed before sending. Error: " + str(err)
-
-func _on_auth_done(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest) -> void:
-	http.queue_free()
-	var text := body.get_string_from_utf8()
-	var data = JSON.parse_string(text)
-
-	if response_code != 200 or typeof(data) != TYPE_DICTIONARY or not data.has("token"):
-		status_label.text = "Login/register failed: " + text
+func _on_auth_done(ok: bool, data: Variant, status: int, raw: String) -> void:
+	if not ok or typeof(data) != TYPE_DICTIONARY or not data.has("token"):
+		status_label.text = "Login/register failed (" + str(status) + "): " + raw
 		return
-
-	token = data.token
+	Session.token = data.token
+	Session.user = data.get("user", {})
 	status_label.text = "Connected. Loading world..."
-	load_world()
+	Api.request_finished.connect(_on_world_loaded, CONNECT_ONE_SHOT)
+	Api.get_json("/api/world", Session.token)
 
-func load_world() -> void:
-	var http := HTTPRequest.new()
-	add_child(http)
-	http.request_completed.connect(_on_world_loaded.bind(http))
-
-	var err := http.request(
-		api_url + "/api/world",
-		["Authorization: Bearer " + token],
-		HTTPClient.METHOD_GET
-	)
-	if err != OK:
-		status_label.text = "World request failed before sending. Error: " + str(err)
-
-func _on_world_loaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest) -> void:
-	http.queue_free()
-	var text := body.get_string_from_utf8()
-	var data = JSON.parse_string(text)
-
-	if response_code != 200 or typeof(data) != TYPE_DICTIONARY:
-		status_label.text = "World load failed: " + text
+func _on_world_loaded(ok: bool, data: Variant, status: int, raw: String) -> void:
+	if not ok or typeof(data) != TYPE_DICTIONARY or not data.has("cities"):
+		status_label.text = "World load failed (" + str(status) + "): " + raw
 		return
-
-	Session.api_url = api_url
-	Session.token = token
 	Session.last_world_data = data
-	get_tree().change_scene_to_file(WORLD_SCENE)
+	get_tree().change_scene_to_file(WORLD_MAP_SCENE)
