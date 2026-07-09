@@ -204,10 +204,13 @@ func _on_health_done(result: int, response_code: int, headers: PackedStringArray
 	http.queue_free()
 
 func _on_api_done(ok: bool, data: Variant, status_code: int, context: String) -> void:
-	if context != "login" and context != "register" and context != "world_load":
+	if context != "login" and context != "register" and context != "world_load" and context != "character_me":
 		return
 	if context == "world_load":
 		_handle_world_loaded(ok, data, status_code)
+		return
+	if context == "character_me":
+		_handle_character_checked(ok, data, status_code)
 		return
 	if not ok:
 		_set_busy(false)
@@ -233,10 +236,33 @@ func _handle_world_loaded(ok: bool, data: Variant, status_code: int) -> void:
 		status_label.text = "World data was not valid."
 		return
 	Session.last_world_data = data
-	_set_loading_steps(["✓ Server connected", "✓ Account authenticated", "✓ Cities loaded", "✓ Entering world"])
-	status_label.text = "Welcome, " + Session.player_name + "."
-	await get_tree().create_timer(0.35).timeout
-	get_tree().change_scene_to_file("res://scenes/CitySelect.tscn")
+	_set_loading_steps(["✓ Server connected", "✓ Account authenticated", "✓ Cities loaded", "• Checking character"])
+	status_label.text = "Checking your character..."
+	API.get_json("/api/characters/me", "character_me")
+
+func _handle_character_checked(ok: bool, data: Variant, status_code: int) -> void:
+	_set_busy(false)
+	# Existing character: continue to city selection.
+	if ok and typeof(data) == TYPE_DICTIONARY and data.has("character") and data["character"] != null:
+		var character_value: Variant = data["character"]
+		if typeof(character_value) == TYPE_DICTIONARY:
+			Session.current_character = character_value
+		_set_loading_steps(["✓ Server connected", "✓ Account authenticated", "✓ Cities loaded", "✓ Character loaded", "✓ Entering world"])
+		status_label.text = "Welcome, " + Session.player_name + "."
+		await get_tree().create_timer(0.25).timeout
+		get_tree().change_scene_to_file("res://scenes/CitySelect.tscn")
+		return
+
+	# No character yet: open creator. Support both 404 and {character:null}.
+	if status_code == 404 or (ok and typeof(data) == TYPE_DICTIONARY and data.has("character") and data["character"] == null):
+		_set_loading_steps(["✓ Server connected", "✓ Account authenticated", "✓ Cities loaded", "• Create your character"])
+		status_label.text = "Create your character to continue."
+		await get_tree().create_timer(0.25).timeout
+		get_tree().change_scene_to_file("res://scenes/CharacterCreate.tscn")
+		return
+
+	_set_loading_steps([])
+	status_label.text = "Character check failed: " + _friendly_error(data, status_code)
 
 func _friendly_error(data: Variant, status_code: int) -> String:
 	var error_text := "unknown_error"

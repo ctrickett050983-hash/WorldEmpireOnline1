@@ -116,7 +116,7 @@ func _on_character_done(ok: bool, data: Variant, status_code: int, context: Stri
 		Realtime.connect_to_server()
 		get_tree().change_scene_to_file("res://scenes/CitySelect.tscn")
 		return
-	if status_code == 404:
+	if status_code == 404 or (ok and typeof(data) == TYPE_DICTIONARY and data.has("character") and data["character"] == null):
 		get_tree().change_scene_to_file("res://scenes/CharacterCreate.tscn")
 		return
 	status.text = "Character check failed: " + str(data)
