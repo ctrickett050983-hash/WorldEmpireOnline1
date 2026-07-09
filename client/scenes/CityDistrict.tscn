@@ -112,6 +112,81 @@ offset_bottom = 560.0
 autowrap_mode = 2
 text = "Select property."
 
+
+[node name="InteractionPrompt" type="Label" parent="HUD"]
+visible = false
+offset_left = 430.0
+offset_top = 620.0
+offset_right = 850.0
+offset_bottom = 672.0
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+text = "Press E to inspect"
+
+[node name="PhoneButton" type="Button" parent="HUD"]
+offset_left = 1110.0
+offset_top = 64.0
+offset_right = 1260.0
+offset_bottom = 104.0
+text = "Phone (P)"
+
+[node name="PhonePanel" type="Panel" parent="HUD"]
+offset_left = 900.0
+offset_top = 110.0
+offset_right = 1260.0
+offset_bottom = 404.0
+
+[node name="PhoneTitle" type="Label" parent="HUD/PhonePanel"]
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 250.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "Phone"
+
+[node name="ClosePhoneButton" type="Button" parent="HUD/PhonePanel"]
+offset_left = 298.0
+offset_top = 8.0
+offset_right = 348.0
+offset_bottom = 38.0
+text = "X"
+
+[node name="CityAppButton" type="Button" parent="HUD/PhonePanel"]
+offset_left = 14.0
+offset_top = 48.0
+offset_right = 94.0
+offset_bottom = 84.0
+text = "City"
+
+[node name="PropertyAppButton" type="Button" parent="HUD/PhonePanel"]
+offset_left = 102.0
+offset_top = 48.0
+offset_right = 202.0
+offset_bottom = 84.0
+text = "Property"
+
+[node name="BusinessAppButton" type="Button" parent="HUD/PhonePanel"]
+offset_left = 210.0
+offset_top = 48.0
+offset_right = 302.0
+offset_bottom = 84.0
+text = "Business"
+
+[node name="BankAppButton" type="Button" parent="HUD/PhonePanel"]
+offset_left = 14.0
+offset_top = 90.0
+offset_right = 94.0
+offset_bottom = 126.0
+text = "Bank"
+
+[node name="PhoneBody" type="RichTextLabel" parent="HUD/PhonePanel"]
+offset_left = 14.0
+offset_top = 136.0
+offset_right = 346.0
+offset_bottom = 282.0
+bbcode_enabled = true
+text = "Phone apps will appear here."
+
 [node name="ChatPanel" type="Panel" parent="HUD"]
 offset_left = 860.0
 offset_top = 420.0
