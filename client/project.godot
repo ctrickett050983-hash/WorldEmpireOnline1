@@ -2,8 +2,8 @@
 config_version=5
 
 [application]
-config/name="World Empire Online - Sprint 3"
-run/main_scene="res://scenes/Login.tscn"
+config/name="World Empire Online - Stage 1"
+run/main_scene="res://scenes/Launch.tscn"
 config/features=PackedStringArray("4.2")
 
 [autoload]
