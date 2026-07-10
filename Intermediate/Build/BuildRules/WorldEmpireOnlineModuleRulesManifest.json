@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\WorldEmpireOnline\\Source\\WorldEmpireOnline\\WorldEmpireOnline.Build.cs",
+		"D:\\WorldEmpireOnline\\Source\\WorldEmpireOnline\\WorldEmpireOnline.Target.cs",
+		"D:\\WorldEmpireOnline\\Source\\WorldEmpireOnline\\WorldEmpireOnlineEditor.Target.cs"
+	],
+	"EngineVersion": "5.8.0"
+}

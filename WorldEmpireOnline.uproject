@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{0850FA14-459E-4267-69A5-18BE00DEC922}",
+	"Category": "Games",
+	"Description": "World Empire Online Unreal Engine 5 client starter connected to the Node/PostgreSQL backend.",
+	"Modules": [
+		{
+			"Name": "WorldEmpireOnline",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

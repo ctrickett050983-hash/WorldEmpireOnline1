@@ -1,0 +1,88 @@
+Log started at 07/10/2026 00:42:19 (2026-07-09T23:42:19Z)
+Resolved project argument D:/WorldEmpireOnline/WorldEmpireOnline.uproject to D:\WorldEmpireOnline\WorldEmpireOnline.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\micha\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\micha\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\micha\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No project scope config file at D:\WorldEmpireOnline\Saved\UnrealBuildTool\BuildConfiguration.xml. Creating default.
+Reading configuration file from: C:\Users\micha\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from: D:\WorldEmpireOnline\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from: C:\Users\micha\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Log file: D:\WorldEmpireOnline\Saved\Logs\UnrealVersionSelector-2026.07.10-00.42.19.log
+
+Setting temp directory to 'C:\Users\micha\AppData\Local\Temp\UnrealBuildTool\60a5a49b'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Unable to find valid SDK(s) for Win64:
+  Found Sdk Version, MinRequired=10.0.19041.0, MaxRequired=10.9.99999.0.
+  Found AutoSdk Version, Required=10.0.22621.0.
+        Registering build platform: Win64 - buildable: False
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Resolved project argument D:/WorldEmpireOnline/WorldEmpireOnline.uproject to D:\WorldEmpireOnline\WorldEmpireOnline.uproject
+Reading configuration file from cache (D:\WorldEmpireOnline\Intermediate\Build\XmlConfigCache.bin): C:\Users\micha\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\WorldEmpireOnline\Intermediate\Build\XmlConfigCache.bin): D:\WorldEmpireOnline\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\WorldEmpireOnline\Intermediate\Build\XmlConfigCache.bin): C:\Users\micha\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Registering project generator UnrealBuildTool.AndroidProjectGenerator for Android
+Skipping project file generator registration for Android due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.IOSProjectGenerator for IOS
+Skipping project file generator registration for IOS due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.LinuxProjectGenerator for Linux
+Skipping project file generator registration for Linux due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.LinuxProjectGenerator for LinuxArm64
+Skipping project file generator registration for LinuxArm64 due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.MacProjectGenerator for Mac
+Skipping project file generator registration for Mac due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.TVOSProjectGenerator for TVOS
+Skipping project file generator registration for TVOS due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.WindowsProjectGenerator for Win64
+Registering project generator UnrealBuildTool.VisionOSProjectGenerator for VisionOS
+Skipping project file generator registration for VisionOS due to no valid BuildPlatform.
+
+---   SDK INFO START   ---
+
+Some Platforms were skipped due to invalid SDK setup: Win64.
+See the log file for detailed information
+
+---   SDK INFO END   ---
+
+
+Generating VisualStudio project files:
+Discovering modules, targets and source code for project...
+Unable to enumerate Visual Studio installations
+Detected supported platforms: Win64
+Writing automation project files took 0.03s
+Unexpected ProjectFileFormat 'Default'
+BuildException: Unexpected ProjectFileFormat 'Default'
+   at UnrealBuildTool.ProjectFiles.VisualStudio.VisualStudioSolutionBuilder`1.BuildSolution(VCProjectFileFormat format, Boolean forSlnx)
+   at UnrealBuildTool.VCProjectFileGenerator.GenerateAutomationProjectFiles(List`1 AllGameProjects, PlatformProjectGeneratorCollection PlatformProjectGenerators, ILogger Logger)
+   at UnrealBuildTool.ProjectFileGenerator.GenerateProjectFiles(PlatformProjectGeneratorCollection PlatformProjectGenerators, String[] Arguments, ILogger Logger)
+   at UnrealBuildTool.GenerateProjectFilesMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger)
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray)
+WriteFileIfChanged() wrote 0 changed files of 2 requested writes.
+
+Timeline:
+[  0.000]  +0.391 Main
+   0.080          [  0.080]  +0.130 Apply XmlConfig
+   0.219          [  0.219]  +0.053 AddTelemetry
+   0.304          [  0.303]  +0.087 RegisterPlatforms
+[  0.494]  +1.720 Generating VisualStudio project files
+   0.561          [  0.067]  +1.626 Adding Automation Projects
+   0.561             0.067          [  0.000]  +0.403 <unknown>
+   0.965             0.470          [  0.403]  +0.341 VisionOS.Automation.csproj
+   1.307             0.812          [  0.745]  +0.183 LiveLinkHub.Automation.csproj
+   1.563             1.068          [  1.001]  +0.169 UnrealBuildTool.csproj
+   1.734             1.240          [  1.172]  +0.145 EpicGames.BuildGraph.Tests.csproj
+   1.896             1.401          [  1.334]  +0.121 EpicGames.Serialization.csproj
+   2.043             1.549          [  1.481]  +0.075 EpicGames.Serialization.Tests.csproj
+   2.120             1.625          [  1.558]  +0.067 EpicGames.Perforce.Fixture.csproj
+   2.189          [  1.694]  +0.026 Writing automation project files
+[  2.219]  +0.002 TelemetryService.FlushEvents
+[  2.223]
+
+Result: Failed (OtherCompilationError)
+Total execution time: 2.22 seconds

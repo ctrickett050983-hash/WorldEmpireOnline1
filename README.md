@@ -1,68 +1,104 @@
-# World Empire Online - Stage 2
+# World Empire Online - Unreal Engine 5 Client Starter
 
-Stage 2 adds persistent character creation after login.
+This changes the client direction from Godot to Unreal Engine 5 while keeping your Node.js/PostgreSQL server.
 
-## Client changes
+## What stays the same
 
-Copy the `client/` folder into your repo.
+Your backend should stay as the source of truth:
 
-New flow:
+- PostgreSQL database
+- Node.js server
+- JWT authentication
+- `/api/auth/login`
+- `/api/auth/register`
+- `/api/world`
+- `/api/cities/:id`
+- `/api/characters/me`
+- `/api/characters/create`
+- `/api/properties/:id/buy`
+- WebSocket chat
 
-1. Login/register.
-2. Load `/api/world`.
-3. Check `GET /api/characters/me`.
-4. If no character exists, open character creation.
-5. Save to `POST /api/characters/create`.
-6. Continue to city select.
+## What this Unreal starter includes
 
-## Server changes required
+- UE5 C++ project shell
+- `UWEOGameInstance` API client
+- Login/register functions callable from Blueprint
+- Character load/create functions callable from Blueprint
+- World and city loading functions callable from Blueprint
+- Property buying function callable from Blueprint
+- WebSocket connect/chat functions callable from Blueprint
+- Third-person character C++ class
+- Input mappings for WASD, sprint, jump, interact, phone
 
-Before testing the client, add the Stage 2 server patch.
+## How to use
 
-### Database
+1. Unzip this folder.
+2. Open `WorldEmpireOnline.uproject` in Unreal Engine 5.
+3. Let Unreal generate project files.
+4. Compile from Visual Studio/Rider or from Unreal.
+5. Create UMG widgets and call the Blueprint functions on `WEOGameInstance`.
 
-Run:
+## Recommended Blueprint flow
 
-```sql
-\i server_stage2_patch/migrations/002_characters.sql
+### Main Menu Widget
+
+Call:
+
+```text
+Get Game Instance -> Cast to WEOGameInstance -> Login(email, password)
 ```
 
-Or paste the SQL into pgAdmin/query tool.
+Bind to:
 
-### Routes
-
-If you are still using the single-file `server.js`, you can replace it with:
-
-`server_stage2_patch/drop_in_single_file_server/server.js`
-
-If you are using the refactored backend, copy the routes from:
-
-`server_stage2_patch/characters_route_snippet.js`
-
-into your character route module or main app and mount it with the same paths.
-
-## Test
-
-1. Start PostgreSQL.
-2. Start your server.
-3. Open Godot.
-4. Log in with an existing player.
-5. If no character exists, the character creator opens.
-6. Create character.
-7. You should continue to city selection.
-
-## PowerShell endpoint test
-
-```powershell
-$response = Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" `
-  -Method POST `
-  -ContentType "application/json" `
-  -Body '{"email":"player1@example.com","password":"Password123!"}'
-
-$token = $response.token
-
-Invoke-RestMethod -Uri "http://localhost:3000/api/characters/me" `
-  -Headers @{ Authorization = "Bearer $token" }
+```text
+OnApiMessage
+OnCharacterLoaded
+OnWorldLoaded
 ```
 
-If you have not created a character yet, this should return `character_not_found`.
+### After login
+
+The GameInstance automatically calls:
+
+```text
+GET /api/characters/me
+```
+
+If the message is `character_required`, show character creation.
+
+### Character creation
+
+Call:
+
+```text
+CreateCharacter(firstName, lastName, startingCityId)
+```
+
+### World map
+
+Use the `Cities` array after `OnWorldLoaded` fires.
+
+### City
+
+Call:
+
+```text
+LoadCity(cityId)
+```
+
+Then use `CurrentCityProperties` to spawn property markers/buildings.
+
+## Important
+
+Do not connect Unreal directly to PostgreSQL. Unreal should only talk to the Node.js server.
+
+## Next stage
+
+The next stage should add:
+
+- UMG login widget
+- UMG character creator widget
+- UMG city select widget
+- A starter Unreal map
+- Blueprint building/property marker actor
+- Property purchase prompt
